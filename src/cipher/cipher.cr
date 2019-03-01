@@ -40,12 +40,12 @@ class OpenSSL::Cipher
   end
 
   def random_key
-    iv = SecureRandom.random_bytes key_len
+    key = Random::Secure.random_bytes key_len
     self.key = key
   end
 
   def random_iv
-    iv = SecureRandom.random_bytes iv_len
+    iv = Random::Secure.random_bytes iv_len
     self.iv = iv
   end
 
