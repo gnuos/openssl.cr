@@ -67,7 +67,7 @@ module OpenSSL
     end
 
     def to_der
-      fn = ->(buf: UInt8**|Nil) {
+      fn = ->(buf : UInt8** | Nil) {
         if private_key?
           LibCrypto.i2d_dsaprivatekey(dsa, buf)
         else

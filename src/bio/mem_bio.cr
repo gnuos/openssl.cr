@@ -1,7 +1,6 @@
 require "../openssl"
 
 class OpenSSL::MemBIO < IO
-
   class BIOError < OpenSSLError; end
 
   def initialize(@bio : LibCrypto::BIO)
@@ -9,7 +8,7 @@ class OpenSSL::MemBIO < IO
   end
 
   def initialize
-    initialize LibCrypto.bio_new(LibCrypto.bio_s_mem())
+    initialize LibCrypto.bio_new(LibCrypto.bio_s_mem)
   end
 
   def read(data : Slice(UInt8))

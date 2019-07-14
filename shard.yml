@@ -1,0 +1,9 @@
+name: openssl
+version: 0.1.0
+
+authors:
+  - Kevin <root@unixs.org>
+
+crystal: 0.29.0
+
+license: MIT

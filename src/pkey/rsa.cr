@@ -20,16 +20,19 @@ module OpenSSL
     end
 
     def self.generate(size)
-      rsa = LibCrypto.rsa_generate_key(size, 65537.to_u32, nil, nil)
+      bne = LibCrypto.bn_new
+      rsa = LibCrypto.rsa_new
+      LibCrypto.bn_set_word(bne, LibCrypto::RSA_F4)
+      LibCrypto.rsa_generate_key(rsa, size, bne, nil)
       new(true).tap do |pkey|
-        LibCrypto.evp_pkey_assign(pkey, LibCrypto::NID_rsaEncryption, rsa.as(Pointer(Void)))
+        LibCrypto.evp_pkey_assign(pkey, LibCrypto::EVP_PKEY_RSA, rsa.as(Pointer(Void)))
       end
     end
 
     def public_key
       pub_rsa = LibCrypto.rsapublickey_dup(rsa)
       RSA.new(false).tap do |pkey|
-        LibCrypto.evp_pkey_assign(pkey, LibCrypto::NID_rsaEncryption, pub_rsa.as(Pointer(Void)))
+        LibCrypto.evp_pkey_assign(pkey, LibCrypto::EVP_PKEY_RSA, pub_rsa.as(Pointer(Void)))
       end
     end
 
@@ -107,7 +110,7 @@ module OpenSSL
     end
 
     def to_der
-      fn = ->(buf: UInt8**|Nil) {
+      fn = ->(buf : UInt8** | Nil) {
         if private_key?
           LibCrypto.i2d_rsaprivatekey(rsa, buf)
         else

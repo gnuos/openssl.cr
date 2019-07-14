@@ -9,7 +9,7 @@ module OpenSSL
     end
 
     def initialize(is_private)
-      initialize(LibCrypto.evp_pkey_new(), is_private)
+      initialize(LibCrypto.evp_pkey_new, is_private)
     end
 
     def to_unsafe

@@ -35,7 +35,7 @@ module OpenSSL
       unless md
         raise "Unsupported digest algoritm: #{name}"
       end
-      ctx = LibCrypto.evp_md_ctx_create()
+      ctx = LibCrypto.evp_md_ctx_create
       unless ctx
         raise OpenSSL::Digest::DigestError.new "Digest initialization failed."
       end
@@ -54,7 +54,7 @@ module OpenSSL
     end
 
     def clone
-      ctx = LibCrypto.evp_md_ctx_create()
+      ctx = LibCrypto.evp_md_ctx_create
       if LibCrypto.evp_md_ctx_copy(ctx, @ctx) == 0
         LibCrypto.evp_md_ctx_destroy(ctx)
         raise DigestError.new("Unable to clone digest")
