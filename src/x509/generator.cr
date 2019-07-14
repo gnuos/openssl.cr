@@ -47,7 +47,7 @@ class OpenSSL::X509::Generator
   property ext_usage
 
   def generate
-    pkey = PKey::RSA.new(bitlength)
+    pkey = PKey::EC.new(bitlength)
     certificate = Certificate.new
     sign(certificate, pkey)
     {certificate, pkey}
@@ -71,11 +71,11 @@ class OpenSSL::X509::Generator
     LibCrypto.x509_set_issuer_name(certificate, name)
 
     unless usage.empty?
-      value = usage.map{|v| v.to_s.gsub(/^\w/){|s| s[0].downcase}}.join(",")
+      value = usage.map { |v| v.to_s.gsub(/^\w/) { |s| s[0].downcase } }.join(",")
       add_extension(certificate, LibCrypto::NID_key_usage, value)
     end
     unless ext_usage.empty?
-      value = ext_usage.map{|v| v.to_s.gsub(/^\w/){|s| s[0].downcase}}.join(",")
+      value = ext_usage.map { |v| v.to_s.gsub(/^\w/) { |s| s[0].downcase } }.join(",")
       add_extension(certificate, LibCrypto::NID_ext_key_usage, value)
     end
     if LibCrypto.x509_sign(certificate, pkey, digest.new.to_unsafe_md) == 0

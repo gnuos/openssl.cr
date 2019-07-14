@@ -4,7 +4,7 @@ include OpenSSL::X509
 
 certificate, pkey =
   Generator.generate do |g|
-    g.bitlength = 2048
+    g.bitlength = 384
     g.valid_period = 365 * 2
     g.cn = "MyName"
     g.usage << Generator::KeyUsage::DigitalSignature
