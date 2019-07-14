@@ -8,8 +8,8 @@ This library provides binding for OpenSSL library.
 
 # Requirements
 
-- Crystal language version 0.9 and higher.
-- openssl version 1.0.2a or higher
+- Crystal language version 0.29 and higher.
+- openssl version 1.1.0 or higher
 
 On Mac OSX the default openssl is quite outdated. You can use `homebrew` to install the latest openssl:
 
@@ -99,7 +99,7 @@ If you have a need to generate your own self-signed certificate:
 ```crystal
 certificate, pkey =
   OpenSSL::X509::Generator.generate do |g|
-    g.bitlength = 2048
+    g.bitlength = 384
     g.valid_period = 365 * 2
     g.cn = "MyName"
     g.usage << Generator::KeyUsage::DigitalSignature
@@ -111,6 +111,7 @@ puts certificate.to_pem
 
 - Extend X509::Certificate to get access to extentions, X509CRL, etc.
 - X509::Generate is quite primitive at the moment.
+- 提供选择算法类型的参数，在RSA和ECC之间可以自由选择
 
 # License
 
