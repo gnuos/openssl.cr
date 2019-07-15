@@ -1,4 +1,4 @@
-require "./lib_crypto"
+require "../crypto/crypto"
 
 @[Link("ssl")]
 lib LibSSL

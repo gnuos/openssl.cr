@@ -1,4 +1,4 @@
-require "./lib/lib_ssl"
+require "./lib/ssl/*"
 
 module OpenSSL
   class OpenSSLError < Exception

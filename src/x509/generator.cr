@@ -47,7 +47,7 @@ class OpenSSL::X509::Generator
   property ext_usage
 
   def generate
-    pkey = PKey::EC.new(bitlength)
+    pkey = PKey::RSA.new(bitlength)
     certificate = Certificate.new
     sign(certificate, pkey)
     {certificate, pkey}
